@@ -18,7 +18,7 @@
 5. Run tests```mvn test```
 ### Usage
 #### Products
-Create products:
+Create product
 ```
 POST /admin/products/add
 {
@@ -55,9 +55,15 @@ POST /admin/promotions/add
 ```
 
 #### Cart
+
+Create cart
+```
+POST /carts
+```
+
 Add item to cart
 ```
-POST /{cartId}/add
+POST /carts/{cartId}/add
 {
     "product": {
       "productId" : 1
@@ -69,7 +75,7 @@ POST /{cartId}/add
 
 Remove item from cart
 ```
-POST /{cartId}/delete/{cartItemId}
+POST /carts/{cartId}/delete/{cartItemId}
 ```
 
 Get cart
