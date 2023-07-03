@@ -6,6 +6,7 @@
 ### Requirements
 - Java 17
 - Maven
+- H2
 - Postman (or any tools to test API)
 ### Installation
 1. Clone repo
@@ -16,6 +17,12 @@
 3. ```mvn clean package```
 4. ```java --enable-preview -jar .\target\bullish-0.0.1-SNAPSHOT.jar```
 5. Run tests```mvn test```
+6. localhost:8080
+   7. change to other port by updating `server.port` in application.properties
+7. Database: localhost:8080/h2-console 
+
+
+
 ### Usage
 #### Products
 Create product
