@@ -16,6 +16,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,7 +46,7 @@ class OrderControllerTest {
     void getOrders() throws Exception {
         when(orderService.getOrders()).thenReturn(new ArrayList<Order>());
         mockMvc
-                .perform(post("/carts/1/checkout").contentType(MediaType.APPLICATION_JSON))
+                .perform(get("/orders").contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

@@ -21,7 +21,8 @@ public class OrderController {
         orderService.placeOrder(cartId);
         return ResponseEntity.ok("Checkout cart");
     }
-    @GetMapping
+
+    @GetMapping(value = "orders")
     public ResponseEntity<List<Order>> getOrders() {
         List<Order> orders = orderService.getOrders();
         return ResponseEntity.ok(orders);

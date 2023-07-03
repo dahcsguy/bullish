@@ -38,7 +38,7 @@ GET /products
 
 Get product
 ```
-GET /products{productId}
+GET /products/{productId}
 ```
 
 #### Promotions
@@ -91,7 +91,7 @@ POST /carts/{cartId}/checkout
 
 Receipt of all purchases
 ```
-GET /admin/orders
+GET /orders
 
 [
     {
