@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
 public class CartItem {
     @Id
     @GeneratedValue
-    private int id;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    private int cartItemId;
+    @OneToOne(cascade = CascadeType.MERGE)
     private Product product;
     private int quantity;
+    @ManyToOne
+    Cart cart;
 
 }

@@ -1,7 +1,9 @@
 package com.bullish.service.impl;
 
+import com.bullish.model.CartItem;
 import com.bullish.model.Product;
 import com.bullish.repository.ProductRepository;
+import com.bullish.service.CartService;
 import com.bullish.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    CartService cartService;
 
     @Override
     public List<Product> getAllProducts() {
@@ -36,6 +41,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(int productId) {
+        List<CartItem> cartItems = cartService.getCartsWithProduct(productId);
+        for (CartItem cartItem : cartItems) {
+            cartService.deleteCartItem(cartItem.getCartItemId());
+        }
         productRepository.deleteById(productId);
     }
 

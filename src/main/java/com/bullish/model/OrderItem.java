@@ -12,12 +12,13 @@ public class OrderItem {
 
     @Id
     @GeneratedValue
-    private int id;
+    private int orderItemId;
     String productName;
     double price;
     private int quantity;
     private double subtotal;
     @ManyToOne
     private Promotion promotion;
+    private double discount;
 
 }

@@ -13,10 +13,9 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue
-    private int id;
+    private int productId;
     private String name;
     @Positive
     private double price;
-    private boolean isAvailable = true;
 
 }

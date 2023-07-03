@@ -1,6 +1,5 @@
 package com.bullish.model;
 
-import com.bullish.model.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
@@ -11,9 +10,8 @@ import lombok.Data;
 public abstract class Promotion {
     @Id
     @GeneratedValue
-    private int id;
-    @OneToOne
-    private Product product;
+    private int promotionId;
+    private int productId;
     @Positive
     private int maxUse;
 

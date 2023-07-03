@@ -39,7 +39,7 @@ class ProductServiceTest {
         List<Product> productList = new ArrayList();
         productList.add(new Product());
         productList.add(new Product());
-        when(productService.getAllProducts()).thenReturn(productList);
+        when(productRepository.findAll()).thenReturn(productList);
         List<Product> list = productService.getAllProducts();
         assertEquals(productList, list);
 
@@ -54,6 +54,7 @@ class ProductServiceTest {
 
     @Test
     void addProduct() {
+
     }
 
     @Test

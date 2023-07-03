@@ -9,6 +9,8 @@ import com.bullish.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,13 +39,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void updateCartItem(int cartId, CartItem cartItem) {
-        this.getCartById(cartId).ifPresentOrElse(cart -> {
-            cart.updateItemInCart(cartItem);
-            cartItemRepository.save(cartItem);
-        }, () -> {
-            throw new CartNotFoundException();
-        });
+    public void deleteCartItem(int cartItemId) {
+        for (CartItem cartItem : cartItemRepository.findAll()) {
+            if (cartItem.getCartItemId() == cartItemId) {
+                cartItem.getCart().removeFromCart(cartItemId);
+                cartItemRepository.deleteById(cartItemId);
+            }
+        }
     }
 
     @Override
@@ -65,5 +67,17 @@ public class CartServiceImpl implements CartService {
     public void createCart() {
         cartRepository.save(new Cart());
     }
+
+    @Override
+    public List<CartItem> getCartsWithProduct(int productId) {
+        List<CartItem> cartItems = new ArrayList();
+        for(CartItem cartItem : cartItemRepository.findAll()) {
+            if(cartItem.getProduct().getProductId() == productId) {
+                cartItems.add(cartItem);
+            }
+        }
+        return cartItems;
+    }
+
 
 }

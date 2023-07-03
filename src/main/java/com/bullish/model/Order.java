@@ -11,9 +11,11 @@ import java.util.List;
 public class Order {
     @Id
     @GeneratedValue
-    private int id;
+    private int orderId;
     @OneToMany
     private List<OrderItem> orderItemList;
-    private double total;
+    private double grantTotal;
+    private double subtotal;
+    private double discount;
 
 }

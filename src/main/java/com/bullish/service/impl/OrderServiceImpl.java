@@ -2,11 +2,11 @@ package com.bullish.service.impl;
 
 import com.bullish.exception.CartNotFoundException;
 import com.bullish.exception.EmptyCartException;
+import com.bullish.helper.OrderCalculationHelper;
 import com.bullish.model.*;
 import com.bullish.repository.OrderItemRepository;
 import com.bullish.repository.OrderRepository;
 import com.bullish.service.CartService;
-import com.bullish.service.OrderCalculationService;
 import com.bullish.service.OrderService;
 import com.bullish.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,6 @@ public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository;
 
     @Autowired
-    OrderCalculationService orderCalculationService;
-    @Autowired
     OrderItemRepository orderItemRepository;
     @Autowired
     PromotionService promotionService;
@@ -45,22 +43,29 @@ public class OrderServiceImpl implements OrderService {
         }
         Order order = new Order();
         List<OrderItem> orderItems = new ArrayList<>();
-        double total = 0.0;
+        double subtotal = 0.0;
+        double discount = 0.0;
         for (CartItem cartItem : cart.getCartItems()) {
             OrderItem orderItem = new OrderItem();
             orderItem.setQuantity(cartItem.getQuantity());
             Product product = cartItem.getProduct();
+            Optional<Promotion> optionalPromotion = promotionService.findMatchingPromotion(product);
             orderItems.add(orderItem);
-            orderItem.setSubtotal(orderCalculationService.calculateCartItem(cartItem));
+            orderItem.setSubtotal(product.getPrice() * cartItem.getQuantity());
+            double itemDiscount = OrderCalculationHelper.calculateDiscount(cartItem, optionalPromotion);
+            orderItem.setDiscount(itemDiscount);
             orderItem.setPrice(product.getPrice());
             orderItem.setProductName(product.getName());
-            total += orderItem.getSubtotal();
-            orderItemRepository.save(orderItem);
-            Optional<Promotion> optionalPromotion = promotionService.findMatchingPromotion(product);
             optionalPromotion.ifPresent(orderItem::setPromotion);
+            orderItemRepository.save(orderItem);
+
+            subtotal += orderItem.getSubtotal();
+            discount += itemDiscount;
         }
         order.setOrderItemList(orderItems);
-        order.setTotal(total);
+        order.setSubtotal(subtotal);
+        order.setDiscount(discount);
+        order.setGrantTotal(subtotal - discount);
         cartService.deleteCart(cartId);
         orderRepository.save(order);
     }

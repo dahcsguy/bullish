@@ -13,8 +13,8 @@ import java.util.List;
 public class Cart {
     @Id
     @GeneratedValue
-    private int id;
-    @ManyToMany
+    private int cartId;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<CartItem> cartItems = new ArrayList<>();
 
     public boolean isEmpty() {
@@ -22,17 +22,16 @@ public class Cart {
     }
 
     public void addToCart(CartItem cartItem) {
+        cartItem.setCart(this);
         cartItems.add(cartItem);
     }
 
     public void removeFromCart(int cartItemId) {
-        cartItems.removeIf(item -> item.getId() == cartItemId);
+        cartItems.removeIf(item -> item.getCartItemId() == cartItemId);
     }
 
-    public void updateItemInCart(CartItem cartItem) {
-        cartItems.stream().findAny().ifPresent(item -> {
-            item.setQuantity(cartItem.getQuantity());
-        });
+    public boolean containsExistingProduct(int productId) {
+        return cartItems.stream().anyMatch(cartItem -> cartItem.getProduct().getProductId() == productId);
     }
 
 }

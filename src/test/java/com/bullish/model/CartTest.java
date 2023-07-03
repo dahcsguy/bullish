@@ -19,7 +19,6 @@ class CartTest {
         Cart cart = new Cart();
         CartItem cartItem = new CartItem();
         Product product = new Product();
-        product.setAvailable(false);
         product.setName("apple");
         product.setPrice(12.3);
         cartItem.setQuantity(12);
@@ -34,7 +33,6 @@ class CartTest {
         Cart cart = new Cart();
         CartItem cartItem = new CartItem();
         Product product = new Product();
-        product.setAvailable(false);
         product.setName("apple");
         product.setPrice(12.3);
         cartItem.setQuantity(12);

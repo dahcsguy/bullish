@@ -23,7 +23,7 @@ public class PromotionServiceImpl implements PromotionService {
     @Override
     public Optional<Promotion> findMatchingPromotion(Product product) {
         for (Promotion nextPromotion : promotionRepository.findAll()) {
-            if (nextPromotion.getProduct().equals(product)) {
+            if (nextPromotion.getProductId() == product.getProductId()) {
                 return Optional.of(nextPromotion);
             }
         }
