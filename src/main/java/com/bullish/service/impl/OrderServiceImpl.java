@@ -29,6 +29,8 @@ public class OrderServiceImpl implements OrderService {
     OrderCalculationService orderCalculationService;
     @Autowired
     OrderItemRepository orderItemRepository;
+    @Autowired
+    PromotionService promotionService;
 
     @Override
     public void placeOrder(int cartId) {
@@ -48,16 +50,14 @@ public class OrderServiceImpl implements OrderService {
             OrderItem orderItem = new OrderItem();
             orderItem.setQuantity(cartItem.getQuantity());
             Product product = cartItem.getProduct();
-            PurchasedProduct purchasedProduct = PurchasedProduct
-                    .builder()
-                    .price(product.getPrice())
-                    .name(product.getName())
-                    .build();
-            orderItem.setProduct(purchasedProduct);
             orderItems.add(orderItem);
             orderItem.setSubtotal(orderCalculationService.calculateCartItem(cartItem));
+            orderItem.setPrice(product.getPrice());
+            orderItem.setProductName(product.getName());
             total += orderItem.getSubtotal();
             orderItemRepository.save(orderItem);
+            Optional<Promotion> optionalPromotion = promotionService.findMatchingPromotion(product);
+            optionalPromotion.ifPresent(orderItem::setPromotion);
         }
         order.setOrderItemList(orderItems);
         order.setTotal(total);

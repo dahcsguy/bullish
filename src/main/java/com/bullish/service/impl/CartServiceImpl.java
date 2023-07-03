@@ -6,7 +6,6 @@ import com.bullish.model.CartItem;
 import com.bullish.repository.CartItemRepository;
 import com.bullish.repository.CartRepository;
 import com.bullish.service.CartService;
-import com.bullish.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +19,6 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     CartItemRepository cartItemRepository;
-    @Autowired
-    ProductService productService;
 
 
     @Override

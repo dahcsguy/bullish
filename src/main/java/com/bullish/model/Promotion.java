@@ -8,7 +8,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "ItemPromotion")
-public class Promotion {
+public abstract class Promotion {
     @Id
     @GeneratedValue
     private int id;

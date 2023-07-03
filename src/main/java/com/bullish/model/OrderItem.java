@@ -13,8 +13,8 @@ public class OrderItem {
     @Id
     @GeneratedValue
     private int id;
-    @ManyToOne
-    private PurchasedProduct product;
+    String productName;
+    double price;
     private int quantity;
     private double subtotal;
     @ManyToOne

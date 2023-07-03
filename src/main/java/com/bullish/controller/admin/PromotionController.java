@@ -1,5 +1,6 @@
 package com.bullish.controller.admin;
 
+import com.bullish.model.BYGXPromotion;
 import com.bullish.model.Promotion;
 import com.bullish.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class PromotionController {
     PromotionService promotionService;
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addPromotion(@RequestBody Promotion promotion) {
+    public ResponseEntity<?> addPromotion(@RequestBody BYGXPromotion promotion) {
         promotionService.addPromotion(promotion);
         return ResponseEntity.ok("Promotion saved");
     }
